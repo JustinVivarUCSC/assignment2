@@ -149,11 +149,14 @@ class Assignment(object):
             [500000, 142047],
             [1000000, 325207.5],
         ]
+        section = self.browser.find_element(By.CSS_SELECTOR, 'section#app')
         for v, expected in test_values:
             field_1 = self.browser.find_element(By.NAME, value='value-1')
             field_14 = self.browser.find_element(By.NAME, value='value-14')
             field_1.clear()
             field_1.send_keys(str(v))
+            section.click()
+            self.browser.implicitly_wait(0.1)
             value_14 = field_14.get_attribute('value')
             assert float(value_14) == expected, f"Tax computation for input {v}, returned {value_14} instead of {expected}"
         return 1, f"Tax computation correct for all test values"
@@ -166,13 +169,15 @@ class Assignment(object):
             (((1, 250000), (2, 1500), (3, 100), (7, 6000), (11, 3000)), 0, 52107.0,),
             (((1, 80000), (2, 5500), (3, 1700), (7, 5000), (11, 4000)), 0, 10444.5,),
             (((1, 80000), (2, 5500), (3, 1700), (7, 35000), (11, 4000)), 19555.5, 0,),
-    ]
+        ]
         for inps, out1, out2 in test_values:
             self.refresh() # Otherwise, autocomplete breaks the test.
+            section = self.browser.find_element(By.CSS_SELECTOR, 'section#app')
             for i, v in inps:
                 field = self.browser.find_element(By.NAME, value=f'value-{i}')
                 field.clear()
                 field.send_keys(str(v))
+                section.click()
             field_13 = self.browser.find_element(By.NAME, value='value-13')            
             field_14 = self.browser.find_element(By.NAME, value='value-14')
             out_13 = float(field_13.get_attribute('value'))
