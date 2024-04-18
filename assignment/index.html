@@ -6,6 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2023 1040EZ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <style>
+        .side-header {
+            background: none;
+            border: none;
+            text-align: left;
+            vertical-align: top;
+        }
+        .section-divider {
+            border-top: 1px solid #ddd;
+        }
+        .table-no-borders td, .table-no-borders th {
+            border: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,7 +37,81 @@
     <section class="section" id="app">
         <div class="container">
             <h1 class="title">2023 Simplified Tax Form</h1>
-            <!-- Put your solution here -->
+            <table class="table is-fullwidth table-no-borders">
+                <tbody>
+                  <tr class="row-1">
+                    <td>Income</td>
+                    <td><b>1</b> Wages, salaries, and tips. This should be shown in box 1 of your Form(s) W-2. Attach your Form(s) W-2.</td>
+                    <td><input type="text" name="value-1" @input="updateValue($event, 'val1')"></td>
+                  </tr>
+                  <tr class="row-2">
+                    <td></td>
+                    <td><b>2</b> Taxable interest from 1099 forms</td>
+                    <td><input type="text" name="value-2" @input="updateValue($event, 'val2')"></td>
+                  </tr>
+                  <tr class="row-3">
+                    <td></td>
+                    <td><b>3</b> Other income not included in 1 and 2.</td>
+                    <td><input type="text" name="value-3" @input="updateValue($event, 'val3')"></td>
+                  </tr>
+                  <tr class="row-4">
+                    <td></td>
+                    <td><b>4</b> Add lines 1, 2, and 3. This is your adjusted gross income.</td>
+                    <td><input readonly type="text" id="gross-income" name="value-4"></td>
+                  </tr>
+                  <tr class="row-5">
+                    <td></td>
+                    <td><b>5</b> If this is a joint return, add your spouse as a dependent. Write $13,850 for an individual return and $27,700 for a joint return. <br>Spouse <input type="checkbox" id="joint-return" @change="updateMarriedStatus($event)"></input></td>
+                    <td><input readonly type="text" id="spousal-money" name="value-5" @input="updateValue($event, 'val5')"></td>
+                  </tr>
+                  <tr class="row-6">
+                    <td></td>
+                    <td><b>6</b> Subtract line 5 from line 4. If line 5 is larger than line 4, enter -0-. This is your taxable income.</td>
+                    <td><input readonly type="text" id="taxable-income" name="value-6"></td>
+                  </tr>
+                  <tr class="row-7">
+                    <td class="side-header section-divider">Payments, Credits, and Tax</td>
+                    <td><b>7</b> Federal income tax withheld from Form(s) W-2 and 1099.</td>
+                    <td><input type="text" name="value-7" @input="updateValue($event, 'val7')"></td>
+                  </tr>
+                  <tr class="row-8">
+                    <td></td>
+                    <td><b>8</b> Earned income credit (EIC)</td>
+                    <td><input type="text" name="value-8" @input="updateValue($event, 'val8')"></td>
+                  </tr>
+                  <tr class="row-9">
+                    <td></td>
+                    <td><b>9</b> Add lines 7 and 8a. These are your total payments and credits.</td>
+                    <td><input readonly type="text" id="total-payments" name="value-9"></td>
+                  </tr>
+                  <tr class="row-10">
+                    <td></td>
+                    <td><b>10</b> Tax. Use the amount of line 6 above to find your tax in the tax table in the instructions. Then, enter the tax from the table on this line.</td>
+                    <td><input readonly type="text" id="tax" name="value-10"></td>
+                  </tr>
+                  <tr class="row-11">
+                    <td></td>
+                    <td><b>11</b> Other taxes</td>
+                    <td><input type="text" name="value-11" @input="updateValue($event, 'val11')"></td>
+                  </tr>
+                  <tr class="row-12">
+                    <td></td>
+                    <td><b>12</b> Add lines 10 and 11. This is your total tax.</td>
+                    <td><input type="text" id="total-tax" name="value-12"></td>
+                  </tr>
+                  <tr class="row-13">
+                    <td class="side-header section-divider">Refund</td>
+                    <td><b>13</b> If line 9 is larger than 12, subtract line 12 from line 9. This is your refund. If Form 8888 is attached, check here</td>
+                    <td><input readonly id="refund" type="text" name="value-13"></td>
+                  </tr>
+                  <tr class="row-14">
+                    <td class="side-header section-divider">Amount You Owe</td>
+                    <td><b>14</b> If line 12 is larger than line 9, subtract line 9 from line 12. This is the amount you owe. For details on how to pay, see instructions.</td>
+                    <td><input readonly id="owe" type="text" name="value-14"></td>
+                  </tr>
+                </tbody>
+              </table>
+              
         </div>
     </section>
 
